@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build With The1ight Batch 3 - Pitching Rubric</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,800&display=swap">
+  <style>
+    :root {
+      --ink: #FDF5DA;
+      --body: #F0F0F0;
+      --muted: #8ba5ab;
+      --paper: #15333B;
+      --surface: #1d4049;
+      --surface-2: #2a5662;
+      --line: #3E5E63;
+      --night: #102a31;
+      --brand: #FFD94C;
+      --brand-hover: #EAB308;
+      --accent: #4E8770;
+      --light-card: #EDF2F4;
+      --light-ink: #15333B;
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+      --radius: 8px;
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "Be Vietnam Pro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    strong,
+    span,
+    li {
+      overflow-wrap: anywhere;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--body);
+      background:
+        radial-gradient(ellipse at 80% 10%, rgba(42, 86, 98, 0.84) 0%, transparent 46%),
+        linear-gradient(90deg, rgba(255, 217, 76, 0.055) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255, 217, 76, 0.04) 1px, transparent 1px),
+        var(--paper);
+      background-size: 28px 28px;
+      font-family: var(--font-body);
+      line-height: 1.45;
+    }
+
+    .page {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 22px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      background: var(--brand);
+      border-radius: 50%;
+      font-weight: 900;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .hero-main {
+      min-height: 420px;
+      padding: clamp(28px, 5vw, 64px);
+      color: var(--body);
+      background:
+        linear-gradient(135deg, rgba(255, 217, 76, 0.18), transparent 38%),
+        radial-gradient(ellipse at 78% 24%, rgba(78, 135, 112, 0.42) 0%, transparent 48%),
+        linear-gradient(165deg, #102a31 0%, #15333B 58%, #0d2228 100%);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::after {
+      content: "";
+      position: absolute;
+      right: -5%;
+      bottom: 0;
+      width: 48%;
+      height: 34%;
+      background:
+        linear-gradient(135deg, transparent 0 38%, rgba(255, 217, 76, 0.95) 38% 52%, transparent 52%),
+        linear-gradient(45deg, transparent 0 35%, rgba(78, 135, 112, 0.95) 35% 46%, transparent 46%);
+      opacity: 0.9;
+      z-index: 0;
+    }
+
+    .hero-main > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--brand);
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2.35rem, 6vw, 5.8rem);
+      line-height: 0.94;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+      color: var(--ink);
+      font-family: var(--font-display);
+    }
+
+    .hero-copy {
+      max-width: 660px;
+      margin: 24px 0 0;
+      color: rgba(240, 240, 240, 0.84);
+      font-size: clamp(1rem, 1.5vw, 1.24rem);
+      font-weight: 520;
+      overflow-wrap: anywhere;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 18px;
+    }
+
+    .score-card {
+      padding: 28px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .score-title {
+      margin: 0 0 18px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .score-row > div {
+      min-width: 0;
+    }
+
+    .score-row:first-of-type {
+      border-top: 0;
+    }
+
+    .score-pct {
+      font-size: 2rem;
+      line-height: 1;
+      font-weight: 920;
+    }
+
+    .score-row:nth-of-type(1) .score-pct {
+      color: var(--brand);
+    }
+
+    .score-row:nth-of-type(2) .score-pct {
+      color: var(--muted);
+    }
+
+    .score-row:nth-of-type(3) .score-pct {
+      color: var(--accent);
+    }
+
+    .score-label {
+      margin: 0;
+      font-weight: 850;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+
+    .score-note {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .principle {
+      padding: 24px;
+      background: var(--brand);
+      border-radius: var(--radius);
+      color: var(--paper);
+      font-weight: 850;
+      font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+      box-shadow: var(--shadow);
+    }
+
+    .section {
+      margin-top: 18px;
+      padding: clamp(24px, 4vw, 42px);
+      background: rgba(29, 64, 73, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+      border-bottom: 2px solid var(--brand);
+      padding-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3.2vw, 3rem);
+      line-height: 1;
+      letter-spacing: 0;
+      color: var(--ink);
+      font-family: var(--font-display);
+    }
+
+    .section-kicker {
+      margin: 0;
+      max-width: 420px;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .formula-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .formula-box {
+      padding: 24px;
+      background: var(--night);
+      color: var(--body);
+      border-radius: var(--radius);
+    }
+
+    .formula-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin: 18px 0 0;
+      font-size: clamp(1.35rem, 3vw, 2.55rem);
+      font-weight: 920;
+      line-height: 1.12;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(253, 245, 218, 0.12);
+      white-space: nowrap;
+    }
+
+    .chip.red {
+      background: var(--brand);
+      color: var(--paper);
+    }
+
+    .chip.cyan {
+      background: var(--surface-2);
+    }
+
+    .chip.green {
+      background: var(--accent);
+    }
+
+    .mini-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--light-card);
+      color: var(--light-ink);
+    }
+
+    .mini-card h3,
+    .rubric-card h3,
+    .check-card h3 {
+      margin: 0;
+      font-size: 1.18rem;
+      letter-spacing: 0;
+      color: var(--ink);
+    }
+
+    .mini-card h3,
+    .flow-step strong {
+      color: var(--light-ink);
+    }
+
+    .mini-card p {
+      margin: 10px 0 0;
+      color: #46646b;
+      font-weight: 620;
+    }
+
+    .rubric-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .rubric-card {
+      min-height: 248px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-top: 8px solid var(--brand);
+      border-radius: var(--radius);
+    }
+
+    .rubric-card:nth-child(2) {
+      border-top-color: var(--muted);
+    }
+
+    .rubric-card:nth-child(3) {
+      border-top-color: var(--surface-2);
+    }
+
+    .rubric-card:nth-child(4) {
+      border-top-color: var(--accent);
+    }
+
+    .rubric-card:nth-child(5) {
+      border-top-color: var(--brand-hover);
+    }
+
+    .rubric-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .weight {
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      background: var(--brand);
+      border-radius: 50%;
+      font-size: 1.05rem;
+      font-weight: 920;
+    }
+
+    .rubric-card p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+      font-weight: 600;
+    }
+
+    .level-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .level {
+      padding: 18px;
+      min-height: 150px;
+      border-left: 1px solid var(--line);
+    }
+
+    .level:first-child {
+      border-left: 0;
+    }
+
+    .level-num {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      color: var(--paper);
+      background: var(--brand);
+      border-radius: 50%;
+      font-weight: 920;
+      margin-bottom: 10px;
+    }
+
+    .level h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .level p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+    }
+
+    .flow-step {
+      min-height: 132px;
+      padding: 16px;
+      background: var(--light-card);
+      color: var(--light-ink);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      position: relative;
+    }
+
+    .flow-step::after {
+      content: "";
+      position: absolute;
+      top: 26px;
+      right: -11px;
+      width: 10px;
+      height: 2px;
+      background: var(--brand);
+    }
+
+    .flow-step:last-child::after {
+      display: none;
+    }
+
+    .flow-step span {
+      display: block;
+      color: #4f6970;
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .flow-step strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .check-card {
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    ul {
+      margin: 16px 0 0;
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 9px 0;
+      color: var(--muted);
+      font-weight: 620;
+    }
+
+    .comment-template {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .comment-item {
+      padding: 20px;
+      color: var(--body);
+      background: var(--night);
+      border-radius: var(--radius);
+      min-height: 150px;
+    }
+
+    .comment-item span {
+      display: block;
+      margin-bottom: 14px;
+      color: var(--brand);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
+
+    .comment-item strong {
+      display: block;
+      font-size: 1.18rem;
+      line-height: 1.18;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding: 28px;
+      color: var(--body);
+      background: var(--night);
+      border-radius: var(--radius);
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .footer p {
+      margin: 0;
+      max-width: 760px;
+      color: rgba(240, 240, 240, 0.82);
+      font-weight: 650;
+    }
+
+    .footer strong {
+      color: var(--ink);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .formula-grid,
+      .check-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .rubric-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .flow {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .flow-step::after {
+        display: none;
+      }
+
+      .level-strip,
+      .comment-template {
+        grid-template-columns: 1fr;
+      }
+
+      .level {
+        min-height: auto;
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .level:first-child {
+        border-top: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(370px, calc(100vw - 20px));
+        margin: 0 10px;
+        padding-top: 14px;
+        overflow: hidden;
+      }
+
+      .topbar,
+      .section-header,
+      .footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero-main {
+        min-height: 360px;
+        padding: 28px;
+      }
+
+      h1 {
+        font-size: clamp(1.45rem, 7vw, 1.85rem);
+        line-height: 1.02;
+      }
+
+      .hero-copy {
+        font-size: 0.98rem;
+        line-height: 1.45;
+      }
+
+      .score-row {
+        grid-template-columns: 58px 1fr;
+      }
+
+      .score-pct {
+        font-size: 1.55rem;
+      }
+
+      .rubric-grid,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .rubric-card {
+        min-height: 210px;
+      }
+
+      .formula-line {
+        font-size: clamp(1.4rem, 8vw, 1.9rem);
+      }
+
+      .chip {
+        white-space: normal;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        width: 100%;
+        padding: 0;
+      }
+
+      .hero-main,
+      .formula-box,
+      .comment-item,
+      .footer {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .section,
+      .score-card,
+      .principle,
+      .hero-main {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">1</div>
+        <span>Build With The1ight - Batch 3</span>
+      </div>
+      <span>Pitching Rubric & Scoring Guide</span>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-main">
+        <p class="eyebrow">Capstone Pitching</p>
+        <h1 id="page-title">Chấm năng lực build sản phẩm thật</h1>
+        <p class="hero-copy">
+          Vòng Pitching đánh giá khả năng biến một vấn đề thật thành MVP có thể kiểm chứng:
+          hiểu người dùng, build được sản phẩm, launch ra ngoài và học từ phản hồi.
+        </p>
+      </div>
+
+      <aside class="hero-side" aria-label="Tỷ trọng điểm">
+        <div class="score-card">
+          <p class="score-title">Điểm Tổng Kết</p>
+          <div class="score-row">
+            <div class="score-pct">70%</div>
+            <div>
+              <p class="score-label">Điểm Giám Khảo</p>
+              <p class="score-note">03 BGK chấm độc lập theo rubric 05 tiêu chí.</p>
+            </div>
+          </div>
+          <div class="score-row">
+            <div class="score-pct">10%</div>
+            <div>
+              <p class="score-label">Điểm Showcase</p>
+              <p class="score-note">Vote hợp lệ, chuẩn hóa để tránh thi quan hệ.</p>
+            </div>
+          </div>
+          <div class="score-row">
+            <div class="score-pct">20%</div>
+            <div>
+              <p class="score-label">Điểm Quá Trình</p>
+              <p class="score-note">Tracking Sheet "Hải trình vượt biển".</p>
+            </div>
+          </div>
+        </div>
+        <div class="principle">
+          Không chấm ai nói hay nhất. Chấm ai chứng minh được tốt nhất: vấn đề thật, MVP thật, phản hồi thật.
+        </div>
+      </aside>
+    </section>
+
+    <section class="section" aria-labelledby="formula-title">
+      <div class="section-header">
+        <h2 id="formula-title">Công thức điểm</h2>
+        <p class="section-kicker">Tất cả thành phần được quy đổi về thang 100 trước khi nhân trọng số.</p>
+      </div>
+
+      <div class="formula-grid">
+        <div class="formula-box">
+          <p class="score-title">Điểm Tổng Kết</p>
+          <div class="formula-line">
+            <span class="chip red">GK x 70%</span>
+            <span>+</span>
+            <span class="chip cyan">SC x 10%</span>
+            <span>+</span>
+            <span class="chip green">QT x 20%</span>
+          </div>
+        </div>
+        <div class="mini-card">
+          <h3>Cách chuẩn hóa</h3>
+          <p><strong>Showcase:</strong> sqrt(vote cá nhân / vote cao nhất) x 100.</p>
+          <p><strong>Quá trình:</strong> điểm tracking cá nhân / điểm tracking cao nhất x 100.</p>
+          <p><strong>Giám khảo:</strong> trung bình 03 BGK / 5 x 100.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="rubric-title">
+      <div class="section-header">
+        <h2 id="rubric-title">05 tiêu chí chấm điểm</h2>
+        <p class="section-kicker">5 tiêu chí là bản chấm chi tiết. Khi truyền thông có thể gom thành 3 trụ cột: Insight, Execution, Validation.</p>
+      </div>
+
+      <div class="rubric-grid">
+        <article class="rubric-card">
+          <div>
+            <div class="rubric-meta"><span>TC01</span><span class="weight">30%</span></div>
+            <h3>Product Insight & MVP Scope</h3>
+            <p>Hiểu đúng pain, nhóm người dùng, root cause và thu hẹp MVP vào giả thuyết quan trọng nhất.</p>
+          </div>
+        </article>
+
+        <article class="rubric-card">
+          <div>
+            <div class="rubric-meta"><span>TC02</span><span class="weight">20%</span></div>
+            <h3>UX, Aha Moment & Product Flow</h3>
+            <p>Luồng dùng rõ, người dùng chạm giá trị nhanh, Aha Moment đủ sớm và đủ thuyết phục.</p>
+          </div>
+        </article>
+
+        <article class="rubric-card">
+          <div>
+            <div class="rubric-meta"><span>TC03</span><span class="weight">20%</span></div>
+            <h3>Execution & Vibe Coding</h3>
+            <p>Tự tay dùng AI, IDE, no-code, low-code hoặc code để tạo MVP chạy được ở flow chính.</p>
+          </div>
+        </article>
+
+        <article class="rubric-card">
+          <div>
+            <div class="rubric-meta"><span>TC04</span><span class="weight">20%</span></div>
+            <h3>Launch, Validation & GTM Thinking</h3>
+            <p>Đưa sản phẩm ra ngoài, lấy phản hồi thật, học được insight và biết hướng tiếp cận early user.</p>
+          </div>
+        </article>
+
+        <article class="rubric-card">
+          <div>
+            <div class="rubric-meta"><span>TC05</span><span class="weight">10%</span></div>
+            <h3>Pitching & Storytelling</h3>
+            <p>Trình bày rõ vấn đề, giải pháp, demo, bài học và next step. Q&A mạch lạc, đúng trọng tâm.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="level-title">
+      <div class="section-header">
+        <h2 id="level-title">Thang điểm 1-5</h2>
+        <p class="section-kicker">Điểm 3 là đạt yêu cầu cơ bản. Điểm 5 chỉ dành cho bằng chứng thật sự nổi bật.</p>
+      </div>
+
+      <div class="level-strip">
+        <div class="level">
+          <span class="level-num">1</span>
+          <h3>Chưa ổn</h3>
+          <p>Thiếu bằng chứng, thiếu vấn đề rõ ràng, hoặc mới dừng ở ý tưởng.</p>
+        </div>
+        <div class="level">
+          <span class="level-num">2</span>
+          <h3>Cần cải thiện</h3>
+          <p>Có hướng đi nhưng mơ hồ, còn nhiều lỗi nền tảng, chưa chứng minh được giả thuyết.</p>
+        </div>
+        <div class="level">
+          <span class="level-num">3</span>
+          <h3>Đạt cơ bản</h3>
+          <p>Có cấu trúc, có MVP hoặc flow cơ bản, nhưng insight và bằng chứng chưa đủ mạnh.</p>
+        </div>
+        <div class="level">
+          <span class="level-num">4</span>
+          <h3>Tốt</h3>
+          <p>Rõ pain, rõ flow, MVP chạy được, có validation và hướng iterate hợp lý.</p>
+        </div>
+        <div class="level">
+          <span class="level-num">5</span>
+          <h3>Xuất sắc</h3>
+          <p>Sắc bén, có bằng chứng mạnh, biết học từ user và thể hiện bản lĩnh Solo Builder.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="pitch-title">
+      <div class="section-header">
+        <h2 id="pitch-title">Khung pitch gợi ý</h2>
+        <p class="section-kicker">Nên pitch luồng chính, không demo mọi tính năng. Demo càng tập trung, BGK càng dễ chấm đúng.</p>
+      </div>
+
+      <div class="flow">
+        <div class="flow-step"><span>1 phút</span><strong>Problem & user</strong></div>
+        <div class="flow-step"><span>1 phút</span><strong>Insight & MVP scope</strong></div>
+        <div class="flow-step"><span>2-3 phút</span><strong>Demo luồng chính</strong></div>
+        <div class="flow-step"><span>1-2 phút</span><strong>Validation & bài học</strong></div>
+        <div class="flow-step"><span>1 phút</span><strong>Next step / GTM</strong></div>
+        <div class="flow-step"><span>Theo điều phối</span><strong>Q&A với BGK</strong></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="checklist-title">
+      <div class="section-header">
+        <h2 id="checklist-title">Checklist chuẩn bị</h2>
+        <p class="section-kicker">Một bên chuẩn bị bằng chứng để được chấm đúng. Một bên comment để học viên biết bước tiếp theo.</p>
+      </div>
+
+      <div class="check-grid">
+        <div class="check-card">
+          <h3>Dành cho học viên</h3>
+          <ul>
+            <li>Slide pitch ngắn gọn, không nhồi quá nhiều chữ.</li>
+            <li>Problem Statement một câu rõ ràng.</li>
+            <li>Link demo, repo hoặc video demo dự phòng.</li>
+            <li>User Flow hoặc Customer Journey của luồng chính.</li>
+            <li>Bằng chứng validation: ai đã test, feedback gì, học được gì.</li>
+            <li>Next Step: nếu có thêm 2 tuần, sẽ sửa gì trước.</li>
+          </ul>
+        </div>
+        <div class="check-card">
+          <h3>Dành cho Ban Giám Khảo</h3>
+          <ul>
+            <li>Chấm theo bằng chứng, không chấm theo cảm giác thích ý tưởng.</li>
+            <li>Chấm từng tiêu chí riêng, tránh để một điểm mạnh kéo toàn bộ điểm số.</li>
+            <li>Ưu tiên năng lực học và iterate hơn vẻ hoàn hảo bề mặt.</li>
+            <li>Điểm 3 là đạt cơ bản; điểm 5 cần bằng chứng nổi bật.</li>
+            <li>Comment ngắn, cụ thể, có hành động tiếp theo.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="comment-title">
+      <div class="section-header">
+        <h2 id="comment-title">Mẫu comment BGK</h2>
+        <p class="section-kicker">Mỗi bài chỉ cần một nhận xét đúng trọng tâm thường giá trị hơn nhiều nhận xét chung chung.</p>
+      </div>
+
+      <div class="comment-template">
+        <div class="comment-item">
+          <span>01</span>
+          <strong>Điểm mạnh nhất cần giữ lại</strong>
+        </div>
+        <div class="comment-item">
+          <span>02</span>
+          <strong>Điểm nghẽn lớn nhất đang cản sản phẩm</strong>
+        </div>
+        <div class="comment-item">
+          <span>03</span>
+          <strong>Một hành động nâng cấp trong 1-2 tuần tới</strong>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p><strong>Tóm tắt:</strong> Batch 3 chấm người hiểu user thật, build MVP thật, launch thật và học thật. Rubric 05 tiêu chí giúp điểm số công bằng hơn và feedback có thể hành động hơn.</p>
+      <div class="brand-mark">1</div>
+    </footer>
+  </main>
+</body>
+</html>
