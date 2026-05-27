@@ -1,0 +1,1053 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product Builder 201 - The1ight</title>
+  <meta name="description" content="Product Builder 201 giúp học viên đi từ prototype chạy được đến product/workspace system có cấu trúc, backend, deploy, automation và workflow AI rõ hơn.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The1ight">
+  <meta property="og:title" content="Product Builder 201 - The1ight">
+  <meta property="og:description" content="Từ prototype chạy được đến product system có cấu trúc, backend, deploy, automation và workflow AI rõ hơn.">
+  <meta property="og:url" content="https://the1ight-public-pages.vercel.app/product-builder-201/">
+  <meta property="og:image" content="https://the1ight-public-pages.vercel.app/product-builder-201/og-image.png">
+  <meta property="og:image:width" content="1734">
+  <meta property="og:image:height" content="907">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Product Builder 201 - The1ight">
+  <meta name="twitter:description" content="Từ prototype chạy được đến product system có cấu trúc, backend, deploy, automation và workflow AI rõ hơn.">
+  <meta name="twitter:image" content="https://the1ight-public-pages.vercel.app/product-builder-201/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,800&family=JetBrains+Mono:wght@500;700&display=swap">
+  <style>
+    :root {
+      --brand: #ffd94c;
+      --brand-hover: #eab308;
+      --heading: #fdf5da;
+      --body: #f0f0f0;
+      --muted: #b9c5c8;
+      --muted-2: #8da0a4;
+      --bg: #15333b;
+      --bg-2: #214c54;
+      --bg-3: #102a31;
+      --line: #3e5e63;
+      --light: #edf2f4;
+      --light-text: #15333b;
+      --green: #4e8770;
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.3);
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "Be Vietnam Pro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--body);
+      background:
+        radial-gradient(ellipse at 82% 0%, rgba(255, 217, 76, 0.12), transparent 30%),
+        radial-gradient(ellipse at 4% 18%, rgba(78, 135, 112, 0.24), transparent 32%),
+        linear-gradient(180deg, #15333b 0%, #102a31 48%, #15333b 100%);
+      font-family: var(--font-body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    p, h1, h2, h3, h4, li, strong, span {
+      overflow-wrap: anywhere;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1180px, calc(100vw - 36px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid rgba(62, 94, 99, 0.8);
+      background: rgba(21, 51, 59, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--heading);
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--bg);
+      background: var(--brand);
+      font-weight: 900;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .nav a:hover { color: var(--heading); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 0 20px;
+      border: 1px solid var(--brand);
+      border-radius: 10px;
+      color: var(--bg);
+      background: var(--brand);
+      font-weight: 850;
+      line-height: 1;
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: var(--brand-hover);
+      border-color: var(--brand-hover);
+    }
+
+    .btn.secondary {
+      color: var(--brand);
+      background: transparent;
+    }
+
+    .btn.secondary:hover {
+      color: var(--brand);
+      background: rgba(255, 217, 76, 0.08);
+      border-color: var(--brand);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(70px, 9vw, 126px) 0 64px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -18vw;
+      top: 10%;
+      width: min(720px, 70vw);
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 217, 76, 0.14);
+      border-radius: 50%;
+      box-shadow:
+        inset 0 0 0 80px rgba(255, 217, 76, 0.02),
+        inset 0 0 0 160px rgba(141, 160, 164, 0.02);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.85fr);
+      gap: clamp(28px, 5vw, 64px);
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--brand);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      color: var(--heading);
+      font-family: var(--font-display);
+      font-weight: 650;
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 870px;
+      font-size: clamp(48px, 7.2vw, 92px);
+    }
+
+    h1 em, h2 em {
+      color: var(--brand);
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 26px 0 0;
+      color: rgba(240, 240, 240, 0.86);
+      font-size: clamp(17px, 1.65vw, 22px);
+      line-height: 1.62;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .signal-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .signal {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--muted);
+      background: rgba(33, 76, 84, 0.55);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .stack-visual {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, rgba(255, 217, 76, 0.08), transparent 40%),
+        rgba(33, 76, 84, 0.78);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .stack-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .stack-title strong {
+      color: var(--brand);
+      font-size: 13px;
+    }
+
+    .stack-map {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .stack-item {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      padding: 13px;
+      border: 1px solid rgba(62, 94, 99, 0.8);
+      border-radius: 8px;
+      background: rgba(16, 42, 49, 0.52);
+    }
+
+    .stack-item .num {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--bg);
+      background: var(--brand);
+      font-weight: 900;
+    }
+
+    .stack-item strong {
+      display: block;
+      color: var(--heading);
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .stack-item span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    section {
+      padding: 76px 0;
+      border-bottom: 1px solid rgba(62, 94, 99, 0.72);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(300px, 0.75fr);
+      gap: 36px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    h2 {
+      max-width: 780px;
+      font-size: clamp(34px, 4.6vw, 58px);
+    }
+
+    .section-copy {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--bg-2);
+      padding: 24px;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset;
+    }
+
+    .card.light {
+      color: var(--light-text);
+      background: var(--light);
+      border-color: transparent;
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 28px;
+    }
+
+    .card.light h3 { color: var(--light-text); }
+
+    .card p, .card li {
+      color: rgba(240, 240, 240, 0.82);
+      font-size: 15px;
+      line-height: 1.58;
+    }
+
+    .card.light p, .card.light li { color: #2a4a52; }
+
+    .card ul {
+      display: grid;
+      gap: 9px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .card li {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.68em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--brand);
+    }
+
+    .pill {
+      display: inline-flex;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255, 217, 76, 0.5);
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: var(--brand);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .pain-band {
+      background: var(--bg-3);
+    }
+
+    .audience-card {
+      min-height: 100%;
+    }
+
+    .syllabus {
+      display: grid;
+      gap: 10px;
+    }
+
+    .session {
+      display: grid;
+      grid-template-columns: 76px minmax(0, 0.75fr) minmax(0, 1.2fr);
+      gap: 18px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      background: rgba(33, 76, 84, 0.7);
+    }
+
+    .session-no {
+      color: var(--brand);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .session h3 {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 850;
+      line-height: 1.28;
+    }
+
+    .session p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .output-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .output-strip span {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 12px;
+      color: var(--muted);
+      background: rgba(16, 42, 49, 0.5);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .optional {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .quote {
+      border-left: 4px solid var(--brand);
+      padding: 0 0 0 22px;
+      color: var(--heading);
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.16;
+    }
+
+    .cta {
+      padding: 80px 0 92px;
+      background:
+        linear-gradient(135deg, rgba(255, 217, 76, 0.14), transparent 36%),
+        var(--bg-3);
+    }
+
+    .cta-box {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(360px, 0.75fr);
+      gap: 28px;
+      align-items: start;
+      border: 1px solid var(--brand);
+      border-radius: var(--radius);
+      padding: clamp(26px, 4vw, 44px);
+      background: rgba(21, 51, 59, 0.78);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box p {
+      max-width: 760px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .lead-form {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+      border: 1px solid rgba(62, 94, 99, 0.92);
+      border-radius: var(--radius);
+      background: rgba(16, 42, 49, 0.72);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--light-text);
+      background: var(--light);
+      font: inherit;
+      font-size: 14px;
+    }
+
+    .field textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    .form-note {
+      color: var(--muted-2);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .form-status {
+      min-height: 20px;
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    .form-status.is-visible {
+      opacity: 1;
+    }
+
+    .form-status.is-warning {
+      color: var(--muted);
+    }
+
+    .form-status.is-error {
+      color: #ffb2a8;
+    }
+
+    footer {
+      padding: 34px 0;
+      color: var(--muted-2);
+      font-size: 13px;
+    }
+
+    @media (max-width: 920px) {
+      .nav { display: none; }
+      .hero-grid,
+      .section-head,
+      .grid.two,
+      .grid.three,
+      .optional,
+      .cta-box {
+        grid-template-columns: 1fr;
+      }
+
+      .session {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: min(100% - 28px, 1180px); }
+      .hero { padding-top: 54px; }
+      .stack-visual { padding: 18px; }
+      .card { padding: 20px; }
+      section { padding: 56px 0; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../">
+        <span class="brand-mark">1</span>
+        <span>The1ight</span>
+      </a>
+      <nav class="nav" aria-label="Điều hướng">
+        <a href="#why">Vì sao có 201</a>
+        <a href="#fit">Ai nên học</a>
+        <a href="#syllabus">9 buổi</a>
+        <a href="#cta">Giữ slot</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Product Builder / Vibe Coding 201</p>
+          <h1>Từ prototype chạy được đến <em>product system</em> có cấu trúc.</h1>
+          <p class="hero-copy">
+            Dành cho học viên 101 và non-tech builder đã từng build bằng AI, nhưng muốn hiểu tech sâu hơn để tự tin làm việc với IDE, GitHub, backend, deploy, MCP và automation.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#cta">Giữ slot 201</a>
+            <a class="btn secondary" href="#syllabus">Xem syllabus</a>
+          </div>
+          <div class="signal-row" aria-label="Tín hiệu khóa học">
+            <span class="signal">9 buổi core</span>
+            <span class="signal">Học với người làm tech</span>
+            <span class="signal">Có project/workspace để áp dụng</span>
+          </div>
+        </div>
+
+        <aside class="stack-visual" aria-label="Bản đồ stack 201">
+          <div class="stack-title">
+            <span>201 Stack Map</span>
+            <strong>build deeper</strong>
+          </div>
+          <div class="stack-map">
+            <div class="stack-item">
+              <span class="num">01</span>
+              <div><strong>Thinking layer</strong><span>MVP gap, PRD kỹ thuật, 4 flow.</span></div>
+            </div>
+            <div class="stack-item">
+              <span class="num">02</span>
+              <div><strong>Build layer</strong><span>IDE, CLI, Skills, MCP, GitHub.</span></div>
+            </div>
+            <div class="stack-item">
+              <span class="num">03</span>
+              <div><strong>System layer</strong><span>Backend decision, deploy, infra basics.</span></div>
+            </div>
+            <div class="stack-item">
+              <span class="num">04</span>
+              <div><strong>Automation layer</strong><span>n8n, workflow, digest, notification.</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="why" class="pain-band">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Why 201 exists</p>
+            <h2>Prototype chạy được là điểm bắt đầu. Đoạn khó nằm ở sau đó.</h2>
+          </div>
+          <p class="section-copy">
+            101 mở cửa cho học viên thấy mình có thể build bằng AI. Nhưng sau bản demo đầu tiên, câu hỏi thật xuất hiện: code sửa tiếp thế nào, data nằm đâu, deploy ra sao, GitHub dùng làm gì, automation nối vào đâu.
+          </p>
+        </div>
+
+        <div class="grid three">
+          <article class="card">
+            <span class="pill">Gap 01</span>
+            <h3>Mù stack</h3>
+            <p>App chạy được nhưng người build không hiểu frontend, backend, database, deploy và server đang liên quan với nhau thế nào.</p>
+          </article>
+          <article class="card">
+            <span class="pill">Gap 02</span>
+            <h3>Mất kiểm soát</h3>
+            <p>AI sửa code được, nhưng nếu không biết đọc diff, chia task, debug và rollback, sản phẩm càng lớn càng dễ vỡ.</p>
+          </article>
+          <article class="card">
+            <span class="pill">Gap 03</span>
+            <h3>Không có workflow</h3>
+            <p>Build xong một lần chưa đủ. Product/workspace thật cần GitHub, backend decision, deploy hygiene và automation cho việc lặp.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="fit">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Who this is for</p>
+            <h2>Khóa này không dành cho số đông. Nó dành cho người đã chạm vào vấn đề thật.</h2>
+          </div>
+          <p class="section-copy">
+            201 phù hợp nhất với học viên cũ và non-tech builder đang muốn hiểu công nghệ đủ sâu để build, làm việc với AI/dev, và tự vận hành hệ thống nhỏ.
+          </p>
+        </div>
+
+        <div class="grid two">
+          <article class="card audience-card light">
+            <span class="pill">Nên học</span>
+            <h3>Học viên 101 / alumni</h3>
+            <ul>
+              <li>Đã có prototype hoặc project dang dở.</li>
+              <li>Muốn hiểu tech sâu hơn sau khi đã build được bản đầu.</li>
+              <li>Muốn nâng project để dùng thật, show thật, hoặc bán thật.</li>
+            </ul>
+          </article>
+          <article class="card audience-card">
+            <span class="pill">Nên học</span>
+            <h3>Non-tech trong môi trường tech</h3>
+            <ul>
+              <li>PM, operator, founder nhỏ, creator, freelancer.</li>
+              <li>Muốn hiểu Vercel, Cloudflare, backend, GitHub, n8n mà không học code từ số 0.</li>
+              <li>Muốn nói chuyện với AI/dev tốt hơn và tự build internal tool/workflow.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="grid three" style="margin-top: 16px;">
+          <article class="card">
+            <span class="pill">Chưa nên học nếu</span>
+            <p>Chưa từng build gì bằng AI và chưa sẵn sàng mở IDE/GitHub.</p>
+          </article>
+          <article class="card">
+            <span class="pill">Chưa nên học nếu</span>
+            <p>Chỉ muốn học prompt cơ bản hoặc muốn một danh sách tool để thử cho vui.</p>
+          </article>
+          <article class="card">
+            <span class="pill">Chưa nên học nếu</span>
+            <p>Muốn học lập trình chuyên sâu như developer hoặc muốn kết quả kiếm tiền nhanh.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="syllabus">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Core syllabus</p>
+            <h2>9 buổi để hiểu stack làm sản phẩm trong thời AI.</h2>
+          </div>
+          <p class="section-copy">
+            Mỗi buổi có một mental model, một demo thực tế và một artifact/BTVN. Mục tiêu không phải học thật nhiều tool, mà là biết chọn đúng mảnh ghép và dùng AI có kiểm soát hơn.
+          </p>
+        </div>
+
+        <div class="syllabus">
+          <article class="session">
+            <div class="session-no">Buổi 01</div>
+            <h3>Mindset: MVP → Product có thể scale</h3>
+            <p>Gap giữa prototype và product/workspace system; tech literacy map cho non-tech; cách học tech với AI.</p>
+          </article>
+          <article class="session">
+            <div class="session-no">Buổi 02</div>
+            <h3>PRD kỹ thuật & 4 flow</h3>
+            <p>PRD v2, main use case, out-of-scope, user flow, business flow, system flow, data flow.</p>
+          </article>
+          <article class="session">
+            <div class="session-no">Buổi 03</div>
+            <h3>IDE + CLI Product Cockpit</h3>
+            <p>Làm việc với agent trong IDE: context, task breakdown, diff review, debug, terminal và CLI.</p>
+          </article>
+          <article class="session">
+            <div class="session-no">Buổi 04</div>
+            <h3>Skills for Product Building</h3>
+            <p>Dùng skill như playbook để brainstorm, scope MVP, review PRD, QA app và test flow sản phẩm.</p>
+          </article>
+          <article class="session">
+            <div class="session-no">Buổi 05</div>
+            <h3>MCP for Product Building</h3>
+            <p>MCP cho browser test, design/prototype, database/schema/docs, repo/GitHub và workspace context.</p>
+          </article>
+          <article class="session">
+            <div class="session-no">Buổi 06</div>
+            <h3>GitHub & Version Control</h3>
+            <p>Issue → change → review → commit → deploy; AI review code/change; repo hygiene và rollback mindset.</p>
+          </article>
+          <article class="session">
+            <div class="session-no">Buổi 07</div>
+            <h3>Backend Decision Layer</h3>
+            <p>Khi nào dùng Google Sheets, Firebase, Supabase, backend/API custom; schema, CRUD, auth, permission.</p>
+          </article>
+          <article class="session">
+            <div class="session-no">Buổi 08</div>
+            <h3>Deploy & Infra Landscape</h3>
+            <p>Vercel, Cloudflare, VPS, Docker, SSH, env vars, secrets, domain, logs và cách chọn đường deploy.</p>
+          </article>
+          <article class="session">
+            <div class="session-no">Buổi 09</div>
+            <h3>Automation with n8n</h3>
+            <p>n8n như automation layer: form/input → data store → notification/digest; local/cloud/self-host overview.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">What students build</p>
+            <h2>Output không phải chứng chỉ. Output là hệ thống hiểu được, sửa được, dùng tiếp được.</h2>
+          </div>
+          <p class="section-copy">
+            Học viên có thể dùng project cá nhân. Nếu chưa có project đủ rõ, lớp có thể dùng shared project mẫu như Personal Work OS Lite để nối PRD, backend, deploy và automation.
+          </p>
+        </div>
+
+        <div class="output-strip">
+          <span>MVP-to-Scale Gap Checklist</span>
+          <span>PRD v2</span>
+          <span>4 flow</span>
+          <span>IDE/CLI workflow</span>
+          <span>GitHub repo hygiene</span>
+          <span>Backend decision matrix</span>
+          <span>Deploy plan</span>
+          <span>n8n workflow</span>
+          <span>Before/after demo</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="grid two">
+          <div>
+            <p class="eyebrow">Optional previews</p>
+            <h2>Demo thêm để thấy đường đi xa hơn.</h2>
+          </div>
+          <p class="section-copy">
+            Các demo này là preview, không phải promise chính của khóa. Mục tiêu là cho học viên thấy khi ghép các mảnh 201 lại, có thể đi tới Personal OS, Obsidian + LLM, AI Agent Harness hoặc RAG/OCR use case.
+          </p>
+        </div>
+
+        <div class="optional" style="margin-top: 30px;">
+          <article class="card">
+            <span class="pill">Preview</span>
+            <h3>Personal OS / Work OS</h3>
+            <p>Input capture, task/note database, digest, n8n automation và AI-assisted planning.</p>
+          </article>
+          <article class="card">
+            <span class="pill">Preview</span>
+            <h3>Obsidian + LLM</h3>
+            <p>Knowledge base cá nhân nối với LLM để synthesize, research, digest và tạo output.</p>
+          </article>
+          <article class="card">
+            <span class="pill">Preview</span>
+            <h3>AI Agent Harness / OpenClaw</h3>
+            <p>Agent có role, tools, context, workflow và handoff; không đi sâu orchestration trong 201.</p>
+          </article>
+          <article class="card">
+            <span class="pill">Preview</span>
+            <h3>RAG / OCR use case</h3>
+            <p>Upload file, OCR, summary, database, retrieval và AI-generated insight ở mức demo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container grid two" style="align-items: center;">
+        <div class="quote">
+          201 không dạy thêm 100 tool. 201 dạy cách hiểu stack để không bị tool và AI kéo đi.
+        </div>
+        <article class="card light">
+          <span class="pill">Teaching model</span>
+          <h3>Học với người làm tech, nhưng viết cho non-tech hiểu.</h3>
+          <p>
+            Giảng viên chính phụ trách phần technical depth. The1ight giữ vai trò định hướng offer, học viên, proof và cách biến nội dung thành một hành trình build có thể theo được.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="cta" class="cta">
+      <div class="container">
+        <div class="cta-box">
+          <div>
+            <p class="eyebrow">Next cohort</p>
+            <h2>Đăng ký quan tâm Product Builder 201.</h2>
+            <p>
+              Form này chỉ dùng để gom người muốn học 201: hiểu tech sâu hơn, nâng prototype/workspace, và đi tiếp sau 101.
+            </p>
+          </div>
+          <form class="lead-form" id="leadForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="name">Họ tên</label>
+                <input id="name" name="name" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="phone">Số điện thoại / Zalo</label>
+                <input id="phone" name="phone" autocomplete="tel" required>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email">
+              </div>
+              <div class="field">
+                <label for="role">Vai trò / nghề nghiệp</label>
+                <input id="role" name="role" placeholder="PM, operator, founder, creator...">
+              </div>
+              <div class="field">
+                <label for="learned101">Đã học 101?</label>
+                <select id="learned101" name="learned101">
+                  <option value="Đã học 101">Đã học 101</option>
+                  <option value="Chưa học 101">Chưa học 101</option>
+                  <option value="Đã từng build prototype bằng AI">Đã từng build prototype bằng AI</option>
+                  <option value="Cần tư vấn fit">Cần tư vấn fit</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="source">Nguồn</label>
+                <select id="source" name="source">
+                  <option value="Pitching / alumni">Pitching / alumni</option>
+                  <option value="Facebook">Facebook</option>
+                  <option value="LinkedIn">LinkedIn</option>
+                  <option value="Bạn bè giới thiệu">Bạn bè giới thiệu</option>
+                  <option value="Khác">Khác</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label for="project">Project / prototype hiện tại</label>
+                <textarea id="project" name="project" placeholder="Đang build gì, đang kẹt phần nào?"></textarea>
+              </div>
+              <div class="field full">
+                <label for="goal">Mục tiêu học 201</label>
+                <textarea id="goal" name="goal" placeholder="Muốn hiểu tech, backend, deploy, n8n, MCP, GitHub... để làm gì?"></textarea>
+              </div>
+            </div>
+            <input type="hidden" name="pageUrl" value="">
+            <button class="btn" type="submit">Đăng ký quan tâm 201</button>
+            <div class="form-status" id="formStatus" aria-live="polite"></div>
+            <p class="form-note">Thông tin sẽ được gửi về sheet <strong>201 Registrations</strong> để team follow-up và check fit trước khi xác nhận lớp.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      Product Builder 201 · The1ight · Draft preview page for discussion
+    </div>
+  </footer>
+  <script>
+    const REGISTRATION_ENDPOINT = "https://script.google.com/macros/s/AKfycbxE0BGzev4Xur1kEcjMiojIAzuEYAbsQBmh-G4sbxBTKqjk-GUXJkX8UvL5YkPIkC1t/exec";
+
+    const form = document.querySelector("#leadForm");
+    const statusEl = document.querySelector("#formStatus");
+    const pageUrlInput = form?.querySelector('input[name="pageUrl"]');
+    let statusTimer;
+
+    function showStatus(message, type = "success", autoHide = true) {
+      if (!statusEl) return;
+
+      window.clearTimeout(statusTimer);
+      statusEl.className = `form-status is-visible is-${type}`;
+      statusEl.textContent = message;
+
+      if (autoHide) {
+        statusTimer = window.setTimeout(() => {
+          statusEl.className = "form-status";
+          statusEl.textContent = "";
+        }, 5200);
+      }
+    }
+
+    if (pageUrlInput) {
+      pageUrlInput.value = window.location.href;
+    }
+
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!REGISTRATION_ENDPOINT) {
+        showStatus("Form đang ở bản preview. Cần gắn Web App URL để ghi vào Google Sheet.", "warning", false);
+        return;
+      }
+
+      const formData = new FormData(form);
+      formData.append("userAgent", window.navigator.userAgent);
+      const payload = new URLSearchParams(formData);
+
+      showStatus("Đang gửi đăng ký...", "warning", false);
+
+      try {
+        await fetch(REGISTRATION_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          body: payload
+        });
+
+        form.reset();
+        if (pageUrlInput) {
+          pageUrlInput.value = window.location.href;
+        }
+        showStatus("Đã nộp đăng ký. The1ight sẽ liên hệ lại sớm.");
+      } catch (error) {
+        showStatus("Chưa gửi được. Vui lòng thử lại hoặc nhắn trực tiếp cho The1ight.", "error", false);
+      }
+    });
+  </script>
+</body>
+</html>
