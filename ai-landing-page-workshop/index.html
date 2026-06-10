@@ -325,15 +325,13 @@
 
       try {
         if (SCRIPT_URL !== "YOUR_APPSCRIPT_WEBAPP_URL_HERE") {
-          await fetch(SCRIPT_URL, {
-            method: "POST",
-            body: params,
+          await fetch(SCRIPT_URL + "?" + params.toString(), {
+            method: "GET",
             mode: "no-cors",
           });
         }
-      } catch (_) {
-        // Vẫn show success — AppScript CORS đôi khi block response nhưng data đã ghi
-      }
+      } catch (_) {}
+
 
       this.style.display = "none";
       document.getElementById("formNote").style.display = "none";

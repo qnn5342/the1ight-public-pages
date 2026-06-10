@@ -1,11 +1,10 @@
-const SPREADSHEET_ID = "YOUR_GOOGLE_SHEET_ID_HERE"; // ← thay bằng ID Google Sheet của bạn
+const SPREADSHEET_ID = "1Q1SExm-teCljU6NdQ8TmxgnLx_yulg6B31dll0R4Tzo"; // ← thay bằng ID Google Sheet của bạn
 const SHEET_NAME     = "AI Workshop Waitlist";
 
-function doPost(e) {
+function handleRequest(e) {
   const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
-  const data  = e.parameter || {};
+  const data  = (e && e.parameter) ? e.parameter : {};
 
-  // Thêm header nếu sheet còn trống
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(["Thời gian", "Họ tên", "Email", "Số điện thoại", "Vai trò", "Mục tiêu", "Nguồn", "Trạng thái"]);
   }
@@ -21,7 +20,6 @@ function doPost(e) {
     "New",
   ]);
 
-  // Gửi email xác nhận cho người đăng ký
   if (data.email) {
     GmailApp.sendEmail(
       data.email,
@@ -66,3 +64,6 @@ function doPost(e) {
     .createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON);
 }
+
+function doGet(e)  { return handleRequest(e); }
+function doPost(e) { return handleRequest(e); }
