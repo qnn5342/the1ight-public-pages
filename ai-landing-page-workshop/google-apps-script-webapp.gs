@@ -2,7 +2,8 @@ const SPREADSHEET_ID = "1Q1SExm-teCljU6NdQ8TmxgnLx_yulg6B31dll0R4Tzo"; // ← th
 const SHEET_NAME     = "AI Workshop Waitlist";
 
 function handleRequest(e) {
-  const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+  const ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
   const data  = (e && e.parameter) ? e.parameter : {};
 
   if (sheet.getLastRow() === 0) {
