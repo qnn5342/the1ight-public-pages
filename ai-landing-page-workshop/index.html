@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The1ight — Waitlist</title>
+  <meta name="description" content="Quan tâm đến việc học build với AI bài bản hơn? Để lại thông tin — The1ight sẽ liên hệ khi có khoá học phù hợp." />
+  <meta property="og:title" content="The1ight — Waitlist" />
+  <meta property="og:description" content="Học build với AI bài bản hơn. Để lại thông tin để được thông báo sớm nhất." />
+  <meta property="og:url" content="https://the1ight-public-pages.vercel.app/ai-landing-page-workshop/" />
+  <meta property="og:site_name" content="The1ight" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,800&display=swap">
+  <style>
+    :root {
+      --bg:          #15333B;
+      --surface:     #1d4049;
+      --surface2:    #2a5662;
+      --border:      #3E5E63;
+      --heading:     #FDF5DA;
+      --body:        #F0F0F0;
+      --muted:       #8ba5ab;
+      --brand:       #FFD94C;
+      --brand-hover: #EAB308;
+      --accent:      #4E8770;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--brand);
+      text-decoration: none;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+    }
+
+    .wrap { width: 100%; max-width: 520px; }
+
+    .tag {
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--brand);
+      border: 1.5px solid var(--brand);
+      border-radius: 4px;
+      padding: 3px 10px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--heading);
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    h1 span { color: var(--brand); }
+
+    .sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+    }
+
+    label {
+      display: block;
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--heading);
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: .95rem;
+      color: var(--body);
+      font-family: 'Be Vietnam Pro', sans-serif;
+      margin-bottom: 18px;
+      transition: border .2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--brand);
+    }
+    select option { background: var(--surface); }
+    textarea { resize: vertical; min-height: 80px; }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--brand);
+      color: var(--bg);
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      transition: background .2s;
+    }
+    .btn:hover  { background: var(--brand-hover); }
+    .btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    .note {
+      font-size: .8rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* SUCCESS */
+    #success { display: none; text-align: center; padding: 20px 0; }
+    #success h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    #success p { color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+    .course-btn {
+      display: inline-block;
+      background: var(--brand);
+      color: var(--bg);
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .course-btn:hover { background: var(--brand-hover); }
+
+    footer {
+      text-align: center;
+      padding: 28px 24px;
+      border-top: 1px solid var(--border);
+      font-size: .82rem;
+      color: var(--muted);
+    }
+    footer strong { color: var(--brand); }
+
+    @media (max-width: 480px) {
+      nav { padding: 16px 20px; }
+      h1  { font-size: 1.8rem; }
+      .card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="https://the1ight.com" class="logo">The1ight</a>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <div class="tag">Waitlist</div>
+      <h1>Học <span>build với AI</span><br/>bài bản hơn?</h1>
+      <p class="sub">
+        Để lại thông tin — The1ight sẽ liên hệ khi có khoá học phù hợp với bạn.
+        Không spam, không sales call khi chưa hỏi ý kiến.
+      </p>
+
+      <div class="card">
+        <form id="waitlistForm">
+          <label for="name">Họ và tên *</label>
+          <input type="text" id="name" name="name" placeholder="Nguyễn Văn A" required />
+
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="email@example.com" required />
+
+          <label for="phone">Số điện thoại *</label>
+          <input type="tel" id="phone" name="phone" placeholder="0901 234 567" required />
+
+          <label for="role">Bạn đang làm gì?</label>
+          <select id="role" name="role">
+            <option value="">— Chọn —</option>
+            <option>Nhân viên / Đi làm văn phòng</option>
+            <option>PM / Product</option>
+            <option>Freelancer</option>
+            <option>Founder / SME owner</option>
+            <option>Creator / Content</option>
+            <option>Khác</option>
+          </select>
+
+          <label for="goal">Bạn muốn dùng AI để làm gì?</label>
+          <textarea id="goal" name="goal" placeholder="Ví dụ: build tool cho công việc, làm landing page, tự động hoá quy trình..."></textarea>
+
+          <button type="submit" class="btn" id="submitBtn">Vào waitlist →</button>
+        </form>
+
+        <p class="note" id="formNote">Thông tin chỉ dùng để liên hệ. Không bán cho bên thứ ba.</p>
+
+        <div id="success">
+          <h2>Đã ghi nhận!</h2>
+          <p>The1ight sẽ liên hệ khi có khoá học phù hợp với bạn.<br/>Check email để xem xác nhận.</p>
+          <a href="https://the1ight.com/danh-sach-khoa-hoc/" class="course-btn" target="_blank">
+            Xem danh sách khoá học →
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <strong>The1ight Empire</strong> — AI là đòn bẩy. Độc lập là đích đến.
+  </footer>
+
+  <script>
+    // Dán URL AppScript Web App vào đây sau khi deploy google-apps-script-webapp.gs
+    const SCRIPT_URL = "YOUR_APPSCRIPT_WEBAPP_URL_HERE";
+
+    document.getElementById("waitlistForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const btn = document.getElementById("submitBtn");
+      btn.disabled = true;
+      btn.textContent = "Đang gửi...";
+
+      const params = new URLSearchParams({
+        name:  document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        role:  document.getElementById("role").value,
+        goal:  document.getElementById("goal").value,
+      });
+
+      try {
+        if (SCRIPT_URL !== "YOUR_APPSCRIPT_WEBAPP_URL_HERE") {
+          await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: params,
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          });
+        }
+      } catch (_) {
+        // Vẫn show success — AppScript CORS đôi khi block response nhưng data đã ghi
+      }
+
+      this.style.display = "none";
+      document.getElementById("formNote").style.display = "none";
+      document.getElementById("success").style.display = "block";
+    });
+  </script>
+
+</body>
+</html>
