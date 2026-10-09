@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Hướng dẫn dựng Starter Vault · Lớp Obsidian</title>
+  <style>
+    :root {
+      --cream: #f9f3dd;
+      --paper: #fffdf5;
+      --ink: #0e2638;
+      --muted: #55707a;
+      --green: #1e606e;
+      --green-deep: #0a4254;
+      --green-soft: #d9eeec;
+      --amber: #e9b40f;
+      --amber-soft: #fff1ad;
+      --line: #c7d9d7;
+      --ok: #18794e;
+      --warn: #9a5b00;
+      --danger: #a33a32;
+      --shadow: 0 18px 50px rgba(14, 38, 56, .10);
+      --radius: 22px;
+      --font: Montserrat, Avenir Next, Avenir, Helvetica Neue, Arial, sans-serif;
+      --mono: "JetBrains Mono", SFMono-Regular, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(233,180,15,.12), transparent 24rem),
+        linear-gradient(180deg, var(--cream) 0 380px, #f3f7f5 380px 100%);
+      font: 16px/1.68 var(--font);
+    }
+    button, input { font: inherit; }
+    a { color: inherit; }
+    code, kbd { font-family: var(--mono); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      color: var(--cream);
+      background: linear-gradient(135deg, var(--green-deep), var(--green));
+      padding: 46px max(24px, calc((100vw - 1240px)/2)) 58px;
+      border-bottom: 8px solid var(--amber);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 430px; height: 430px;
+      right: -130px; top: -210px;
+      border: 72px solid rgba(249,243,221,.07);
+      border-radius: 50%;
+    }
+    .eyebrow {
+      display: flex; align-items: center; gap: 11px;
+      font-size: 12px; font-weight: 800; letter-spacing: .14em;
+      text-transform: uppercase; color: #ffe16a;
+    }
+    .beam { width: 42px; height: 5px; background: var(--amber); border-radius: 9px; box-shadow: 24px 0 0 rgba(255,225,106,.35); }
+    h1 { max-width: 900px; margin: 18px 0 14px; font-size: clamp(38px, 6vw, 74px); line-height: 1.04; letter-spacing: -.045em; }
+    .hero .lead { max-width: 760px; margin: 0; font-size: clamp(17px, 2.1vw, 21px); color: #e6f1ed; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .meta span { padding: 7px 12px; border: 1px solid rgba(249,243,221,.24); border-radius: 999px; background: rgba(255,255,255,.07); font-size: 13px; font-weight: 700; }
+
+    .page {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 38px;
+      width: min(1240px, calc(100% - 40px));
+      margin: 38px auto 90px;
+      align-items: start;
+    }
+    .rail { position: sticky; top: 20px; padding: 19px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,253,245,.94); box-shadow: 0 10px 30px rgba(14,38,56,.06); }
+    .rail-title { margin: 0 0 10px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .rail ol { list-style: none; counter-reset: toc; margin: 0; padding: 0; }
+    .rail li { counter-increment: toc; }
+    .rail a { display: grid; grid-template-columns: 28px 1fr; gap: 8px; align-items: start; padding: 9px 7px; border-radius: 10px; text-decoration: none; font-size: 13px; font-weight: 700; line-height: 1.35; }
+    .rail a::before { content: "0" counter(toc); color: var(--amber); font: 800 11px/1.7 var(--mono); }
+    .rail a:hover { background: var(--green-soft); }
+
+    main { min-width: 0; }
+    .outcomes { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-bottom: 34px; }
+    .outcome { min-width: 0; padding: 15px 13px; color: var(--cream); background: var(--green-deep); border-top: 5px solid var(--amber); border-radius: 12px; }
+    .outcome b { display: block; width: 29px; height: 29px; margin: -31px 0 11px; color: var(--ink); background: #ffd94c; border: 4px solid var(--cream); border-radius: 50%; text-align: center; font-size: 12px; line-height: 21px; }
+    .outcome span { display: block; font-size: 12px; font-weight: 750; line-height: 1.4; }
+
+    .section { margin: 0 0 30px; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: var(--shadow); }
+    .section-head { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 16px; align-items: center; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 2px solid var(--green-soft); }
+    .num { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; color: var(--ink); background: var(--amber); font-size: 20px; font-weight: 900; box-shadow: 0 0 0 7px var(--amber-soft); }
+    .section h2 { margin: 0; color: var(--green-deep); font-size: clamp(24px, 3.2vw, 34px); line-height: 1.15; letter-spacing: -.025em; }
+    .section-head p { margin: 5px 0 0; color: var(--muted); }
+    h3 { margin: 25px 0 8px; color: var(--green-deep); font-size: 19px; line-height: 1.3; }
+    p { margin: 8px 0 14px; }
+
+    .steps { counter-reset: action; display: grid; gap: 11px; margin: 15px 0; }
+    .action { counter-increment: action; position: relative; padding: 15px 17px 15px 58px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+    .action::before { content: counter(action); position: absolute; left: 16px; top: 15px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; color: white; background: var(--green); font-weight: 900; font-size: 13px; }
+    .action strong { color: var(--green-deep); }
+
+    .path {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 7px;
+      margin: 13px 0; padding: 12px 14px; border-radius: 12px;
+      color: #d9eeec; background: var(--ink); font: 700 13px/1.5 var(--mono);
+      overflow-wrap: anywhere;
+    }
+    .path i { color: #ffd94c; font-style: normal; }
+    .path .arrow { color: #75949b; }
+
+    .callout { margin: 17px 0; padding: 15px 18px; border-left: 5px solid var(--green); border-radius: 4px 13px 13px 4px; background: var(--green-soft); }
+    .callout.warn { border-color: var(--amber); background: #fff6ce; }
+    .callout.ok { border-color: var(--ok); background: #e4f5ea; }
+    .callout strong { display: block; margin-bottom: 3px; }
+
+    .two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+    .mini-card { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+    .mini-card h3 { margin-top: 0; }
+    .interface { min-height: 130px; padding: 13px; border-radius: 12px; color: #dce9e7; background: #183a45; font-size: 12px; }
+    .windowbar { display: flex; gap: 5px; margin-bottom: 12px; }
+    .windowbar i { width: 8px; height: 8px; border-radius: 50%; background: #ffcc42; }
+    .windowbar i:nth-child(2) { opacity: .65; }
+    .windowbar i:nth-child(3) { opacity: .35; }
+    .folderline { display: flex; gap: 8px; align-items: center; margin: 7px 0; }
+    .folder { color: #ffd94c; }
+    .same-place { display: grid; place-items: center; margin: 15px 0; padding: 13px; color: var(--green-deep); background: var(--amber-soft); border-radius: 12px; font-weight: 900; text-align: center; }
+
+    .code-wrap { position: relative; margin: 13px 0 18px; }
+    pre { margin: 0; padding: 20px; overflow-x: auto; border-radius: 15px; color: #eef7f3; background: #102f3b; font: 13px/1.7 var(--mono); white-space: pre; }
+    pre .comment { color: #8bb3af; }
+    .copy { position: absolute; right: 9px; top: 9px; padding: 7px 10px; color: var(--ink); background: #ffd94c; border: 0; border-radius: 8px; font-size: 11px; font-weight: 900; cursor: pointer; }
+    .copy:hover { background: #ffe577; }
+
+    .keys { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin: 11px 0; }
+    kbd { display: inline-block; min-width: 34px; padding: 5px 9px; border: 1px solid #9db1b5; border-bottom-width: 3px; border-radius: 7px; color: var(--ink); background: white; font-size: 12px; font-weight: 800; text-align: center; box-shadow: 0 2px 0 #d4dfdf; }
+    .plus { color: var(--muted); font-weight: 900; }
+
+    .table-box { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+    table { width: 100%; border-collapse: collapse; min-width: 650px; font-size: 14px; }
+    th, td { padding: 13px 15px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--cream); background: var(--green-deep); }
+    tr:last-child td { border-bottom: 0; }
+
+    .checklist { display: grid; gap: 10px; margin-top: 20px; }
+    .check { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border: 1px solid var(--line); border-radius: 13px; background: white; cursor: pointer; }
+    .check input { width: 19px; height: 19px; margin-top: 3px; accent-color: var(--ok); flex: 0 0 auto; }
+    .check:has(input:checked) { color: #526c65; background: #edf8f0; border-color: #9dcab0; }
+    .check:has(input:checked) span { text-decoration: line-through; }
+
+    .finish { color: var(--cream); background: linear-gradient(135deg, var(--green-deep), var(--green)); }
+    .finish h2, .finish h3 { color: var(--cream); }
+    .finish .section-head { border-bottom-color: rgba(255,255,255,.2); }
+    .finish .section-head p { color: #d9eeec; }
+    .finish .check { color: var(--ink); }
+    footer { padding: 25px; color: #d3e1de; background: var(--ink); text-align: center; font-size: 13px; }
+
+    @media (max-width: 960px) {
+      .page { grid-template-columns: minmax(0, 1fr); }
+      .rail { position: static; }
+      .rail ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .outcomes { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 26px; }
+    }
+    @media (max-width: 650px) {
+      .hero { padding-top: 32px; }
+      .page { width: min(100% - 24px, 1240px); margin-top: 20px; }
+      .rail ol, .two-col { grid-template-columns: minmax(0, 1fr); }
+      .outcomes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section { padding: 21px 17px; border-radius: 17px; }
+      .section-head { grid-template-columns: 44px minmax(0, 1fr); }
+      .num { width: 44px; height: 44px; font-size: 17px; box-shadow: 0 0 0 5px var(--amber-soft); }
+    }
+    @media print {
+      body { background: white; font-size: 11pt; }
+      .hero { padding: 25px 30px; }
+      .hero h1 { font-size: 36px; }
+      .page { display: block; width: auto; margin: 20px; }
+      .rail, .copy { display: none; }
+      .section { box-shadow: none; break-inside: avoid; }
+      .outcomes { grid-template-columns: repeat(5, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="eyebrow"><span class="beam"></span>The1ight · Lớp Obsidian · Hướng dẫn học viên</div>
+    <h1>Dựng <span style="color:#ffd94c">Starter Vault</span> đầu tiên</h1>
+    <p class="lead">Từ một folder trống đến một vault có template, màu tiêu đề riêng và phím tắt để dùng mỗi ngày.</p>
+    <div class="meta">
+      <span>Đầu ra: 01 vault hoạt động</span>
+      <span>Thời gian: 20–30 phút</span>
+      <span>Cần có: Obsidian đã cài</span>
+      <span>Dành cho: macOS</span>
+    </div>
+  </header>
+
+  <div class="page">
+    <nav class="rail" aria-label="Mục lục">
+      <p class="rail-title">Mục lục bài thực hành</p>
+      <ol>
+        <li><a href="#buoc-1">Chọn folder và tạo vault</a></li>
+        <li><a href="#buoc-2">Obsidian và Finder</a></li>
+        <li><a href="#buoc-3">Tạo template đầu tiên</a></li>
+        <li><a href="#buoc-4">Đổi màu header bằng CSS</a></li>
+        <li><a href="#buoc-5">Gán và dùng phím tắt</a></li>
+        <li><a href="#kiem-tra">Kiểm tra kết quả</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <div class="outcomes" aria-label="Năm mục tiêu">
+        <div class="outcome"><b>1</b><span>Tạo đúng vị trí lưu vault</span></div>
+        <div class="outcome"><b>2</b><span>Hiểu hai giao diện, một folder</span></div>
+        <div class="outcome"><b>3</b><span>Bật và cấu hình Templates</span></div>
+        <div class="outcome"><b>4</b><span>Bật CSS snippet đổi màu H1–H6</span></div>
+        <div class="outcome"><b>5</b><span>Tạo note mẫu bằng phím tắt</span></div>
+      </div>
+
+      <section class="section" id="buoc-1">
+        <div class="section-head">
+          <div class="num">1</div>
+          <div><h2>Chọn folder và tạo nơi lưu tài liệu</h2><p>Trong Obsidian, nơi lưu toàn bộ ghi chú được gọi là <strong>vault</strong>.</p></div>
+        </div>
+
+        <div class="callout">
+          <strong>Vault thực chất là một folder bình thường.</strong>
+          Bên trong là các file Markdown <code>.md</code>, hình ảnh và folder cấu hình <code>.obsidian</code>. Obsidian không nhốt dữ liệu của bạn trong một định dạng riêng.
+        </div>
+
+        <h3>Cách tạo vault mới</h3>
+        <div class="steps">
+          <div class="action">Mở <strong>Obsidian</strong>. Ở màn hình quản lý vault, chọn <strong>Create new vault</strong>.</div>
+          <div class="action">Đặt tên dễ nhận ra, ví dụ <strong>Starter Vault – Tên của bạn</strong>.</div>
+          <div class="action">Tại <strong>Location</strong>, bấm <strong>Browse</strong> và chọn một vị trí rõ ràng trên máy.</div>
+          <div class="action">Bấm <strong>Create</strong>. Obsidian sẽ tạo folder vault rồi mở folder đó.</div>
+        </div>
+
+        <div class="path"><i>Finder</i><span class="arrow">›</span>Documents<span class="arrow">›</span>Obsidian<span class="arrow">›</span><strong>Starter Vault – Tên của bạn</strong></div>
+
+        <div class="callout warn">
+          <strong>Người mới nên chọn một vị trí đơn giản.</strong>
+          Gợi ý: <code>Documents/Obsidian/…</code>. Đừng tạo vault bên trong một vault khác. Nếu dùng iCloud, Dropbox hoặc Google Drive, hãy học cách đồng bộ sau khi vault đã chạy ổn định.
+        </div>
+      </section>
+
+      <section class="section" id="buoc-2">
+        <div class="section-head">
+          <div class="num">2</div>
+          <div><h2>Mở cùng một vị trí qua Obsidian và Finder</h2><p>Hai giao diện khác nhau, nhưng đều đang nhìn vào cùng một folder trên máy.</p></div>
+        </div>
+
+        <div class="two-col">
+          <article class="mini-card">
+            <h3>Giao diện Obsidian</h3>
+            <div class="interface">
+              <div class="windowbar"><i></i><i></i><i></i></div>
+              <div class="folderline"><span class="folder">▾</span><strong>Starter Vault</strong></div>
+              <div class="folderline">　<span>◇</span><span>Ghi chú đầu tiên.md</span></div>
+              <div class="folderline">　<span class="folder">▸</span><span>Templates</span></div>
+            </div>
+            <p>Dùng để viết, liên kết, tìm kiếm và tổ chức ghi chú.</p>
+          </article>
+          <article class="mini-card">
+            <h3>Giao diện Finder</h3>
+            <div class="interface">
+              <div class="windowbar"><i></i><i></i><i></i></div>
+              <div class="folderline"><span class="folder">▾</span><strong>Starter Vault</strong></div>
+              <div class="folderline">　<span>▧</span><span>Ghi chú đầu tiên.md</span></div>
+              <div class="folderline">　<span class="folder">▰</span><span>Templates</span></div>
+            </div>
+            <p>Dùng để thấy file thật, sao chép, di chuyển hoặc sao lưu.</p>
+          </article>
+        </div>
+        <div class="same-place">OBSIDIAN ⇄ CÙNG MỘT FOLDER TRÊN MÁY ⇄ FINDER</div>
+
+        <h3>Mở vị trí vault trong Finder</h3>
+        <div class="steps">
+          <div class="action">Trong thanh file bên trái của Obsidian, nhấp chuột phải vào một file hoặc folder.</div>
+          <div class="action">Chọn <strong>Show in system explorer</strong> / <strong>Reveal in Finder</strong> (tên có thể khác đôi chút theo phiên bản).</div>
+          <div class="action">Finder mở đúng vị trí đó. Hãy nhìn tên folder và file để xác nhận.</div>
+        </div>
+
+        <div class="callout ok">
+          <strong>Bài kiểm tra 30 giây:</strong>
+          Tạo một note tên <code>Kiem-tra-vi-tri</code> trong Obsidian. Chuyển sang Finder và tìm file <code>Kiem-tra-vi-tri.md</code>. Thấy file này nghĩa là bạn đã hiểu đúng “hai giao diện, một địa điểm”.
+        </div>
+      </section>
+
+      <section class="section" id="buoc-3">
+        <div class="section-head">
+          <div class="num">3</div>
+          <div><h2>Dùng plugin Templates tạo template đầu tiên</h2><p><strong>Templates</strong> là Core plugin có sẵn trong Obsidian; không cần tải từ Community plugins.</p></div>
+        </div>
+
+        <h3>A. Tạo folder chứa template</h3>
+        <div class="steps">
+          <div class="action">Trong File explorer của Obsidian, tạo folder mới tên <strong>Templates</strong>.</div>
+          <div class="action">Mở <strong>Settings → Core plugins</strong>, tìm <strong>Templates</strong> và bật công tắc.</div>
+          <div class="action">Vào <strong>Settings → Templates</strong>. Ở <strong>Template folder location</strong>, chọn folder <strong>Templates</strong>.</div>
+        </div>
+        <div class="path">Settings <span class="arrow">›</span> Core plugins <span class="arrow">›</span> <i>Templates: ON</i></div>
+
+        <h3>B. Tạo file template</h3>
+        <p>Tạo note mới bên trong folder <strong>Templates</strong>, đặt tên <code>Thinking Note</code>, rồi dán nội dung mẫu sau:</p>
+        <div class="code-wrap">
+          <button class="copy" type="button">Sao chép</button>
+          <pre><code>---
+type: thinking-note
+created: {{date}} {{time}}
+status: seed
+---
+
+# {{title}}
+
+## Điều mình đang nghĩ
+
+## Vì sao điều này quan trọng?
+
+## Bằng chứng / ví dụ
+
+## Bước tiếp theo
+- [ ] </code></pre>
+        </div>
+        <div class="callout warn">
+          <strong>Đặt template bên trong vault.</strong>
+          Folder <code>Templates</code> phải nằm dưới folder vault. Nếu đặt nó ở ngoài vault, Obsidian Templates sẽ không nhìn thấy.
+        </div>
+      </section>
+
+      <section class="section" id="buoc-4">
+        <div class="section-head">
+          <div class="num">4</div>
+          <div><h2>Đổi màu header bằng CSS snippet</h2><p>CSS snippet là một file <code>.css</code> nhỏ giúp đổi cách Obsidian hiển thị mà không sửa nội dung note.</p></div>
+        </div>
+
+        <h3>A. Mở đúng folder CSS snippets</h3>
+        <div class="steps">
+          <div class="action">Mở <strong>Settings → Appearance</strong>.</div>
+          <div class="action">Cuộn xuống mục <strong>CSS snippets</strong> và bấm biểu tượng folder <strong>Open snippets folder</strong>.</div>
+          <div class="action">Finder sẽ tự mở đúng folder <code>.obsidian/snippets</code>. Hãy để cửa sổ này mở.</div>
+        </div>
+        <div class="path">Starter Vault <span class="arrow">›</span> .obsidian <span class="arrow">›</span> snippets <span class="arrow">›</span> <i>heading-colors.css</i></div>
+
+        <h3>B. Tạo file CSS bằng TextEdit trên Mac</h3>
+        <div class="callout warn">
+          <strong>CSS là file chữ thuần, nhưng đuôi file phải là <code>.css</code>.</strong>
+          File <code>heading-colors.txt</code>, <code>heading-colors.css.txt</code> hoặc <code>heading-colors.rtf</code> sẽ không xuất hiện trong Obsidian. Không dùng Word hoặc Pages để tạo file này.
+        </div>
+        <div class="steps">
+          <div class="action">Mở ứng dụng <strong>TextEdit</strong> và tạo tài liệu mới.</div>
+          <div class="action">Chọn <strong>Format → Make Plain Text</strong>, hoặc nhấn <strong>⇧⌘T</strong>. Bước này bỏ định dạng chữ đậm, font và màu của TextEdit.</div>
+          <div class="action">Bấm nút <strong>Sao chép</strong> bên dưới rồi dán toàn bộ đoạn CSS vào TextEdit.</div>
+          <div class="action">Chọn <strong>File → Save</strong>. Đặt tên chính xác là <code>heading-colors.css</code> và tạm lưu ra <strong>Desktop</strong> cho dễ tìm.</div>
+          <div class="action">Nếu Mac hỏi dùng đuôi <code>.css</code> hay <code>.txt</code>, chọn <strong>Use .css</strong>.</div>
+          <div class="action">Từ Desktop, kéo file <code>heading-colors.css</code> vào cửa sổ folder <code>snippets</code> đang mở.</div>
+        </div>
+
+        <h3>C. Sao chép đoạn CSS thay màu tiêu đề</h3>
+        <div class="code-wrap">
+          <button class="copy" type="button">Sao chép</button>
+          <pre><code><span class="comment">/* heading-colors.css — ví dụ màu tiêu đề */</span>
+body {
+  --h1-color: #e9b40f;
+  --h2-color: #1e606e;
+  --h3-color: #9a5b00;
+}
+
+<span class="comment">/* Áp dụng cả khi đọc và khi soạn thảo */</span>
+.markdown-rendered h1,
+.HyperMD-header-1 { color: var(--h1-color) !important; }
+
+.markdown-rendered h2,
+.HyperMD-header-2 { color: var(--h2-color) !important; }
+
+.markdown-rendered h3,
+.HyperMD-header-3 { color: var(--h3-color) !important; }</code></pre>
+        </div>
+
+        <div class="callout ok">
+          <strong>Kiểm tra trước khi quay lại Obsidian:</strong>
+          Trong Finder, tên file phải hiện đúng là <code>heading-colors.css</code>. Nếu đang là <code>.txt</code> hoặc <code>.rtf</code>, nhấp chuột phải → <strong>Rename</strong>, đổi phần cuối thành <code>.css</code>, rồi chọn <strong>Use .css</strong> khi Mac hỏi xác nhận.
+        </div>
+
+        <h3>D. Bật snippet trong Obsidian</h3>
+        <div class="steps">
+          <div class="action">Quay lại <strong>Settings → Appearance → CSS snippets</strong>.</div>
+          <div class="action">Bấm nút <strong>Reload snippets</strong> (biểu tượng làm mới) nếu chưa thấy file.</div>
+          <div class="action">Bật công tắc cạnh <strong>heading-colors</strong>.</div>
+          <div class="action">Mở một note có <code># H1</code>, <code>## H2</code>, <code>### H3</code> để quan sát màu mới.</div>
+        </div>
+        <div class="callout">
+          <strong>Không thấy folder <code>.obsidian</code>?</strong>
+          Đây là folder ẩn. Cách dễ nhất là luôn mở bằng nút <strong>Open snippets folder</strong> trong Appearance. Trong Finder, có thể nhấn <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>.</kbd> để hiện/ẩn file ẩn.
+        </div>
+      </section>
+
+      <section class="section" id="buoc-5">
+        <div class="section-head">
+          <div class="num">5</div>
+          <div><h2>Dùng phím tắt để tạo note từ template</h2><p>Phím tắt giúp biến quy trình nhiều lần bấm thành một thói quen nhanh.</p></div>
+        </div>
+
+        <h3>Cách 1 — Dùng Command Palette ngay</h3>
+        <div class="keys"><kbd>⌘</kbd><span class="plus">+</span><kbd>P</kbd><span>→ gõ <strong>Templates: Insert template</strong> → chọn <strong>Thinking Note</strong></span></div>
+        <div class="steps">
+          <div class="action">Nhấn <strong>⌘ N</strong> để tạo note mới và đặt tên cho note.</div>
+          <div class="action">Nhấn <strong>⌘ P</strong> để mở Command Palette.</div>
+          <div class="action">Tìm <strong>Templates: Insert template</strong>, nhấn Enter, rồi chọn <strong>Thinking Note</strong>.</div>
+        </div>
+
+        <h3>Cách 2 — Gán phím tắt riêng</h3>
+        <div class="path">Settings <span class="arrow">›</span> Hotkeys <span class="arrow">›</span> tìm <i>Templates: Insert template</i></div>
+        <div class="steps">
+          <div class="action">Mở <strong>Settings → Hotkeys</strong>.</div>
+          <div class="action">Tìm lệnh <strong>Templates: Insert template</strong>.</div>
+          <div class="action">Bấm dấu <strong>+</strong> và gán tổ hợp dễ nhớ. Gợi ý trên macOS: <strong>⌥⌘T</strong>.</div>
+          <div class="action">Tạo note mới, nhấn phím tắt vừa gán, rồi chọn <strong>Thinking Note</strong>.</div>
+        </div>
+        <div class="keys"><kbd>⌘</kbd><span class="plus">+</span><kbd>N</kbd><span>tạo note</span><span class="plus">→</span><kbd>⌥</kbd><span class="plus">+</span><kbd>⌘</kbd><span class="plus">+</span><kbd>T</kbd><span>chèn template</span></div>
+        <div class="callout warn">
+          <strong>Phân biệt hai hành động:</strong>
+          <code>⌘ N</code> tạo một note trống; <strong>Insert template</strong> chèn cấu trúc mẫu vào note đang mở. Muốn “tạo note từ template”, bạn thực hiện hai hành động liên tiếp.
+        </div>
+      </section>
+
+      <section class="section" id="xu-ly-loi">
+        <div class="section-head">
+          <div class="num">?</div>
+          <div><h2>Nếu làm mãi chưa thấy kết quả</h2><p>Đối chiếu triệu chứng trước khi làm lại từ đầu.</p></div>
+        </div>
+        <div class="table-box">
+          <table>
+            <thead><tr><th>Triệu chứng</th><th>Nguyên nhân thường gặp</th><th>Cách sửa nhanh</th></tr></thead>
+            <tbody>
+              <tr><td>Không có lệnh Insert template</td><td>Chưa bật Core plugin Templates</td><td>Settings → Core plugins → bật Templates</td></tr>
+              <tr><td>Danh sách template trống</td><td>Chưa chọn Template folder location hoặc chọn sai folder</td><td>Settings → Templates → chọn đúng folder Templates</td></tr>
+              <tr><td>Không thấy CSS snippet</td><td>File sai đuôi, sai folder hoặc chưa reload</td><td>Kiểm tra <code>.obsidian/snippets/heading-colors.css</code>, rồi Reload snippets</td></tr>
+              <tr><td>Bật CSS nhưng màu không đổi</td><td>CSS chưa lưu, selector xung đột theme, hoặc đang xem header khác</td><td>Lưu file, tắt/bật snippet; thử note có H1–H3</td></tr>
+              <tr><td>Phím tắt không hoạt động</td><td>Trùng với lệnh khác hoặc đang nhập ở ô khác</td><td>Settings → Hotkeys → tìm cảnh báo xung đột và đổi tổ hợp</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section finish" id="kiem-tra">
+        <div class="section-head">
+          <div class="num">✓</div>
+          <div><h2>Checklist hoàn thành</h2><p>Tích từng mục sau khi tự kiểm tra được trên máy của bạn.</p></div>
+        </div>
+        <div class="checklist">
+          <label class="check"><input type="checkbox" data-check="vault"><span>Tôi biết vault đang nằm chính xác ở folder nào trên máy.</span></label>
+          <label class="check"><input type="checkbox" data-check="finder"><span>Tôi mở được cùng một file qua Obsidian và Finder.</span></label>
+          <label class="check"><input type="checkbox" data-check="template"><span>Tôi có folder Templates và file Thinking Note bên trong.</span></label>
+          <label class="check"><input type="checkbox" data-check="css"><span>Tôi đã bật heading-colors và nhìn thấy màu H1/H2/H3 thay đổi.</span></label>
+          <label class="check"><input type="checkbox" data-check="hotkey"><span>Tôi dùng phím tắt để chèn Thinking Note vào một note mới.</span></label>
+        </div>
+        <div class="callout ok" style="margin-top:22px;color:var(--ink)">
+          <strong>Bài nộp gợi ý:</strong>
+          Ảnh chụp có thanh File explorer, note mới từ template và ba cấp tiêu đề đã đổi màu. Không cần chụp toàn bộ màn hình nếu có thông tin riêng tư.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>The1ight · Lớp Obsidian · Starter Vault Handout</footer>
+
+  <script>
+    document.querySelectorAll('.copy').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const text = button.parentElement.querySelector('code').innerText;
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = 'Đã chép ✓';
+        } catch (_) {
+          const area = document.createElement('textarea');
+          area.value = text;
+          document.body.appendChild(area);
+          area.select();
+          document.execCommand('copy');
+          area.remove();
+          button.textContent = 'Đã chép ✓';
+        }
+        setTimeout(() => button.textContent = 'Sao chép', 1600);
+      });
+    });
+
+    document.querySelectorAll('[data-check]').forEach((box) => {
+      const key = 'obsidian-handout-' + box.dataset.check;
+      box.checked = localStorage.getItem(key) === '1';
+      box.addEventListener('change', () => localStorage.setItem(key, box.checked ? '1' : '0'));
+    });
+  </script>
+</body>
+</html>
