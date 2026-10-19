@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Hướng dẫn học viên dùng Obsidian Audio Recorder, Claudian và Whisper local để biến voice recording thành transcript và structured note.">
+<title>Voice → Note với Claudian và Whisper local — The1ight</title>
+<style>
+:root{--cream:#f9f3dd;--paper:#fffdf5;--navy:#0e2638;--green:#1e606e;--green2:#0a4254;--yellow:#e9b40f;--red:#b03a2e;--ok:#196b3c;--line:rgba(14,38,56,.15);--code:#0e2638}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--navy);font:16px/1.62 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{width:min(920px,100%);margin:auto;padding:22px}.hero{background:linear-gradient(135deg,rgba(30,96,110,.11),rgba(233,180,15,.11));border:1px solid rgba(30,96,110,.2);border-radius:18px;padding:28px;margin-bottom:20px}.eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.hero h1{font-size:clamp(30px,6vw,50px);line-height:1.08;margin:8px 0 12px}.hero p{max-width:720px;margin:0}.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.pill{border-radius:999px;background:rgba(30,96,110,.1);padding:5px 11px;font-size:13px;font-weight:700}.toc{position:sticky;top:8px;z-index:5;background:rgba(249,243,221,.97);border:1px solid rgba(30,96,110,.3);border-radius:12px;padding:10px 14px;margin-bottom:22px;box-shadow:0 8px 20px rgba(14,38,56,.08)}.toc summary{cursor:pointer;font-weight:800;color:var(--green2)}.toc ol{columns:2;margin:10px 0 4px;padding-left:24px}.toc li{margin:5px 0}.toc a,.sources a{color:var(--green2)}main{background:var(--paper);border-radius:18px;padding:clamp(20px,5vw,42px);box-shadow:0 8px 30px rgba(14,38,56,.07)}h2{font-size:clamp(23px,4vw,30px);line-height:1.25;margin:48px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--green);scroll-margin-top:72px}h2:first-child{margin-top:0}h3{font-size:19px;color:var(--green2);margin-top:28px}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:center;margin:20px 0}.node{background:#fff;border:1px solid rgba(30,96,110,.28);border-radius:10px;padding:12px;text-align:center;font-weight:800;font-size:14px}.arrow{text-align:center;color:var(--green);font-size:24px;font-weight:900}.callout{border-left:4px solid var(--green);background:rgba(30,96,110,.08);padding:14px 17px;border-radius:8px;margin:16px 0}.callout.warn{border-color:var(--red);background:rgba(176,58,46,.07)}.callout.ok{border-color:var(--ok);background:rgba(25,107,60,.07)}.callout.accent{border-color:var(--yellow);background:rgba(233,180,15,.1)}.callout p{margin:0}.callout p+p{margin-top:8px}.steps{counter-reset:step;list-style:none;padding:0}.steps>li{counter-increment:step;position:relative;padding:2px 0 22px 48px;min-height:42px}.steps>li:before{content:counter(step);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:var(--green);color:white;font-weight:800}.code-wrap{margin:14px 0}.copy{display:block;margin:0 0 6px auto;border:0;border-radius:6px;background:var(--green);color:white;padding:6px 11px;font-weight:800;cursor:pointer}pre{margin:0;background:var(--code);color:#f9f3dd;border-radius:10px;padding:16px;white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.58 ui-monospace,SFMono-Regular,Menlo,monospace}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(14,38,56,.08);border-radius:4px;padding:1px 5px}pre code{background:none;padding:0}.table-wrap{margin:15px 0;overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th{background:var(--green);color:white;text-align:left}th,td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}.checklist{list-style:none;padding:0}.checklist li{padding:8px 0 8px 31px;position:relative}.checklist li:before{content:"□";position:absolute;left:3px;font-size:20px;color:var(--green)}a{color:var(--green2)}.sources{font-size:14px}.foot{margin-top:42px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--green2)}@media(max-width:680px){.wrap{padding:12px}.hero{padding:20px;border-radius:12px}.toc ol{columns:1}main{padding:20px;border-radius:12px}.flow{grid-template-columns:1fr}.arrow{transform:none;font-size:0;line-height:1;padding:2px 0}.arrow::before{content:"\2193";font-size:24px}h2{margin-top:38px}table{font-size:12.5px}th,td{padding:8px 7px}}@media print{body{background:white}.toc,.copy{display:none}.wrap{max-width:none}.hero,main{box-shadow:none;border:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="eyebrow">The1ight · Lớp Obsidian · Hướng dẫn học viên</div>
+  <h1>Biến voice recording thành note bằng <span style="color:var(--green)">Claudian</span> + Whisper local</h1>
+  <p>Ghi âm trong Obsidian, giữ lại file audio gốc, chuyển giọng nói thành chữ ngay trên máy và nhờ AI Agent tổ chức transcript thành một note có thể sử dụng.</p>
+  <div class="meta"><span class="pill">Desktop</span><span class="pill">Whisper local: miễn phí</span><span class="pill">Audio không cần upload</span><span class="pill">30–45 phút setup</span></div>
+</header>
+<details class="toc"><summary>Mục lục</summary><ol><li><a href="#result">Kết quả</a></li><li><a href="#model">Hiểu đúng mô hình</a></li><li><a href="#prepare">Chuẩn bị</a></li><li><a href="#agent">Cài AI Agent</a></li><li><a href="#claudian">Cài Claudian</a></li><li><a href="#whisper">Cài Whisper local</a></li><li><a href="#record">Ghi âm</a></li><li><a href="#prompt">Prompt chuyển voice thành note</a></li><li><a href="#verify">Kiểm tra</a></li><li><a href="#trouble">Sự cố thường gặp</a></li></ol></details>
+<main>
+<section>
+<h2 id="result">01 · Kết quả cuối cùng</h2>
+<p>Sau bài này, bạn có một workflow ngay trong Obsidian:</p>
+<div class="flow"><div class="node">Audio Recorder<br><small>giữ file gốc</small></div><div class="arrow">→</div><div class="node">Whisper local<br><small>audio → text</small></div><div class="arrow">→</div><div class="node">Claudian + AI Agent<br><small>text → note</small></div></div>
+<div class="callout ok"><p><strong>Phần miễn phí:</strong> Whisper chạy trên máy, không tính phí theo phút. AI Agent dùng subscription/API của provider bạn chọn.</p></div>
+</section>
+
+<section>
+<h2 id="model">02 · Hiểu đúng mô hình</h2>
+<p>Claudian đưa một coding agent vào trong vault. Agent có thể đọc, viết, tìm file và chạy lệnh shell với vault làm working directory.[<a href="#s1">1</a>] Agent không cần tự “nghe” audio: nó gọi lệnh <code>whisper</code>, đọc transcript rồi sửa note.</p>
+<div class="callout accent"><p><strong>Hai lớp độc lập:</strong> Whisper lo nhận dạng giọng nói. Codex/Claude Code/OpenCode lo hiểu transcript và tổ chức kiến thức.</p></div>
+<div class="table-wrap"><table><thead><tr><th>Lớp</th><th>Việc làm</th><th>Chi phí</th></tr></thead><tbody><tr><td>Audio Recorder</td><td>Thu âm và embed file vào note</td><td>Miễn phí</td></tr><tr><td>Whisper local</td><td>Chuyển audio thành raw transcript</td><td>Miễn phí, dùng tài nguyên máy</td></tr><tr><td>AI Agent</td><td>Dọn transcript, tóm tắt, tạo action items, sửa note</td><td>Theo subscription/API đã chọn</td></tr></tbody></table></div>
+<div class="callout warn"><p><strong>Giới hạn:</strong> Claudian hiện là plugin desktop cho Obsidian 1.13.0 trở lên.[<a href="#s1">1</a>] Bạn có thể ghi âm trên điện thoại và sync vault, nhưng bước agent + Whisper trong guide này chạy trên máy tính.</p></div>
+</section>
+
+<section>
+<h2 id="prepare">03 · Chuẩn bị</h2>
+<ul class="checklist"><li>Obsidian Desktop đã mở được vault học tập.</li><li>Core plugin <strong>Audio recorder</strong> đã bật.[<a href="#s2">2</a>]</li><li>Có Terminal trên macOS/Linux hoặc PowerShell trên Windows.</li><li>Có subscription/API cho ít nhất một harness được Claudian hỗ trợ.</li><li>Tạo một note thử nghiệm; chưa chạy trên cả vault quan trọng.</li></ul>
+<p>Guide dùng <strong>Codex</strong> làm đường mặc định vì Claudian hỗ trợ chính thức và Codex có thể đăng nhập bằng ChatGPT Plus, Pro, Business, Edu hoặc Enterprise.[<a href="#s4">4</a>]</p>
+<div class="callout warn"><p><strong>Không dùng Command Code trực tiếp trong bài này.</strong> Danh sách harness Claudian hiện công bố gồm Claude Code, Codex, Grok Build, OpenCode, Pi và DeepSeek Harness; Command Code chưa nằm trong danh sách đó.[<a href="#s1">1</a>]</p></div>
+</section>
+
+<section>
+<h2 id="agent">04 · Cài Codex CLI</h2>
+<h3>macOS hoặc Linux</h3>
+<div class="code-wrap"><button class="copy" data-copy="mac-codex">Copy</button><pre id="mac-codex">curl -fsSL https://chatgpt.com/codex/install.sh | sh
+codex</pre></div>
+<h3>Windows PowerShell</h3>
+<div class="code-wrap"><button class="copy" data-copy="win-codex">Copy</button><pre id="win-codex">powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"
+codex</pre></div>
+<ol class="steps"><li>Chạy <code>codex</code>.</li><li>Chọn <strong>Sign in with ChatGPT</strong>.</li><li>Đăng nhập tài khoản được phép dùng Codex.</li><li>Thoát và mở lại Terminal, rồi chạy <code>codex --version</code>.</li></ol>
+<div class="callout"><p>Nếu lớp đã dùng Claude Code hoặc OpenCode, có thể chọn harness đó trong Claudian. Các bước Whisper phía sau không thay đổi.</p></div>
+</section>
+
+<section>
+<h2 id="claudian">05 · Cài plugin Claudian</h2>
+<ol class="steps"><li>Trong Obsidian, vào <strong>Settings → Community plugins</strong>.</li><li>Bấm <strong>Browse</strong>, tìm <strong>Claudian</strong>, chọn <strong>Install</strong> rồi <strong>Enable</strong>.</li><li>Mở <strong>Settings → Claudian → Providers</strong>.</li><li>Chọn <strong>Codex</strong>. Để trống CLI path trước để Claudian tự tìm.</li><li>Mở Claudian từ ribbon hoặc Command palette, tạo một chat mới và hỏi: <em>“Hãy cho biết tên vault hiện tại, không sửa file.”</em></li></ol>
+<div class="callout warn"><p>Nếu báo <code>CLI not found</code>, kiểm tra <code>codex --version</code> trong Terminal, restart Obsidian rồi vào provider settings để đặt đúng CLI path. Claudian lưu ý rằng Obsidian mở từ Dock có thể không nhận cùng PATH với Terminal.[<a href="#s1">1</a>]</p></div>
+</section>
+
+<section>
+<h2 id="whisper">06 · Cài Whisper local</h2>
+<p>Whisper chính thức cần package <code>openai-whisper</code> và chương trình <code>ffmpeg</code> để đọc audio.[<a href="#s3">3</a>] Model <code>small</code> là lựa chọn mặc định của bài này: đủ tốt cho tiếng Việt nhưng chưa quá nặng.</p>
+<h3>macOS — đường ngắn nhất</h3>
+<div class="code-wrap"><button class="copy" data-copy="mac-whisper">Copy</button><pre id="mac-whisper">brew install ffmpeg openai-whisper
+whisper --help</pre></div>
+<p>Nếu chưa có Homebrew, cài từ <a href="https://brew.sh/" target="_blank" rel="noopener">brew.sh</a>, sau đó chạy lại hai lệnh trên.</p>
+<h3>Windows — Python + ffmpeg</h3>
+<p>Cài Python 3.11 trước. Sau đó mở PowerShell:</p>
+<div class="code-wrap"><button class="copy" data-copy="win-whisper">Copy</button><pre id="win-whisper">py -3.11 -m pip install -U openai-whisper
+choco install ffmpeg
+whisper --help</pre></div>
+<p>Nếu không dùng Chocolatey, Whisper cũng hướng dẫn cài ffmpeg bằng Scoop: <code>scoop install ffmpeg</code>.[<a href="#s3">3</a>]</p>
+<h3>Kiểm tra với một recording thật</h3>
+<p>Trong Terminal, kéo file audio từ File Explorer/Finder vào sau dấu ngoặc kép để lấy đúng đường dẫn:</p>
+<div class="code-wrap"><button class="copy" data-copy="test-whisper">Copy</button><pre id="test-whisper">whisper "/duong-dan/Recording.webm" \
+  --model small \
+  --language vi \
+  --task transcribe \
+  --output_format txt</pre></div>
+<div class="callout ok"><p><strong>Kết quả đúng:</strong> lần đầu model được tải xuống; sau đó xuất hiện file <code>Recording.txt</code> có nội dung tiếng Việt. Audio vẫn giữ nguyên.</p></div>
+<div class="callout warn"><p><strong>Không dùng <code>--task translate</code></strong> nếu muốn transcript tiếng Việt. Trong Whisper, “translate” là dịch speech sang tiếng Anh; bài này dùng <code>--task transcribe</code>.[<a href="#s3">3</a>]</p></div>
+</section>
+
+<section>
+<h2 id="record">07 · Ghi âm trong Obsidian</h2>
+<ol class="steps"><li>Vào <strong>Settings → Core plugins</strong>, bật <strong>Audio recorder</strong>.</li><li>Mở note cần capture.</li><li>Chạy Command palette → <strong>Audio recorder: Start recording audio</strong>.</li><li>Nói một ý hoàn chỉnh: bối cảnh, ý chính và bước tiếp theo.</li><li>Dừng recording. Kiểm tra note có audio embed và bấm Play nghe được.</li></ol>
+<p>Audio Recorder là core plugin chính thức của Obsidian.[<a href="#s2">2</a>] Không đổi tên hoặc di chuyển file trước khi agent xử lý.</p>
+</section>
+
+<section>
+<h2 id="prompt">08 · Bảo Claudian biến recording thành note</h2>
+<p>Mở Claudian, dùng <code>@</code> để mention note đang chứa recording rồi gửi prompt sau:</p>
+<div class="code-wrap"><button class="copy" data-copy="main-prompt">Copy</button><pre id="main-prompt">Trong note được @mention có một file audio được embed.
+
+Hãy làm theo đúng thứ tự:
+1. Đọc note và xác định chính xác file audio được embed.
+2. Giữ nguyên audio gốc; không đổi tên, không di chuyển, không xóa.
+3. Dùng Whisper LOCAL bằng lệnh shell, model small, language vi, task transcribe.
+4. Nếu file không nằm cùng thư mục với note, hãy tìm đúng attachment trong vault; không đoán đường dẫn.
+5. Đọc transcript được tạo ra. Không tự bịa lại tên riêng hoặc câu không nghe rõ.
+6. Append ngay dưới audio embed, không overwrite nội dung cũ, theo mẫu:
+
+## Raw transcript
+Toàn bộ transcript, giữ đủ ý.
+
+## Ghi chú đã cấu trúc
+- Bối cảnh
+- Ý chính
+- Quyết định hoặc insight
+
+## Việc cần làm
+- [ ] Checklist cụ thể
+
+## Chỗ chưa rõ
+Các đoạn không nghe chắc; ghi rõ thay vì đoán.
+
+7. Báo lại file audio đã dùng, model Whisper và note đã sửa.</pre></div>
+<div class="callout accent"><p><strong>Trong lần đầu:</strong> đọc các lệnh agent định chạy trước khi bấm Approve. Cho phép lệnh <code>whisper</code> trên đúng file audio; không cấp quyền xoá hoặc sửa hàng loạt.</p></div>
+</section>
+
+<section>
+<h2 id="verify">09 · Checklist kiểm tra</h2>
+<ul class="checklist"><li>Audio gốc vẫn còn và vẫn Play được.</li><li>Whisper chạy local; không nhập OpenAI/OpenRouter API key cho bước transcription.</li><li>Raw transcript xuất hiện đầy đủ trong note.</li><li>Structured note nằm dưới audio embed, không ghi đè nội dung cũ.</li><li>Tên riêng, con số và thuật ngữ được kiểm tra lại bằng audio.</li><li>Action items là việc thật có thể làm, không phải câu tóm tắt chung chung.</li><li>Agent báo đúng đường dẫn audio và note đã sửa.</li></ul>
+<h3>Bài test đạt</h3>
+<p>Ghi một audio 20–30 giây gồm một con số, một tên riêng và một việc cần làm. Workflow đạt khi transcript giữ đúng ba yếu tố đó và note tạo đúng một checkbox hành động.</p>
+</section>
+
+<section>
+<h2 id="trouble">10 · Sự cố thường gặp</h2>
+<div class="table-wrap"><table><thead><tr><th>Triệu chứng</th><th>Nguyên nhân thường gặp</th><th>Cách xử lý</th></tr></thead><tbody>
+<tr><td><code>whisper: command not found</code></td><td>Whisper chưa cài hoặc Terminal/Obsidian chưa nhận PATH mới</td><td>Chạy lại bước 06; restart Terminal và Obsidian; kiểm tra <code>whisper --help</code>.</td></tr>
+<tr><td><code>ffmpeg not found</code></td><td>Thiếu decoder audio</td><td>macOS: <code>brew install ffmpeg</code>. Windows: Chocolatey hoặc Scoop theo bước 06.</td></tr>
+<tr><td>Claudian không thấy Codex</td><td>CLI path không có trong môi trường Obsidian</td><td>Kiểm tra <code>codex --version</code>, restart Obsidian, rồi đặt CLI path trong Claudian Provider settings.</td></tr>
+<tr><td>Agent tìm sai audio</td><td>Attachment nằm ở folder khác hoặc note có nhiều recording</td><td>@mention đúng note; yêu cầu agent liệt kê các embed trước và dừng để bạn chọn.</td></tr>
+<tr><td>Transcript sai tiếng Việt</td><td>Không đặt language hoặc dùng model quá nhỏ</td><td>Dùng <code>--language vi --model small --task transcribe</code>; nói gần mic hơn.</td></tr>
+<tr><td>Lần đầu rất chậm</td><td>Đang tải model và khởi tạo local inference</td><td>Chờ tải xong; các lần sau dùng cache. Không bấm chạy lặp nhiều lần.</td></tr>
+<tr><td>Agent sửa quá nhiều file</td><td>Prompt thiếu phạm vi hoặc cấp quyền rộng</td><td>Dừng agent; chỉ @mention một note thử nghiệm và yêu cầu append, không overwrite.</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="sources">
+<h2>Sources</h2>
+<ol><li id="s1"><a href="https://github.com/YishenTu/claudian" target="_blank" rel="noopener">Claudian — official repository</a></li><li id="s2"><a href="https://obsidian.md/help/plugins/audio-recorder" target="_blank" rel="noopener">Obsidian Help — Audio recorder</a></li><li id="s3"><a href="https://github.com/openai/whisper" target="_blank" rel="noopener">OpenAI Whisper — official repository</a></li><li id="s4"><a href="https://github.com/openai/codex" target="_blank" rel="noopener">OpenAI Codex CLI — official repository</a></li></ol>
+</section>
+<footer class="foot">The1ight · Lớp Obsidian · Hướng dẫn học viên. Hãy thực hành trong note thử nghiệm trước khi cho agent sửa vault quan trọng.</footer>
+</main>
+</div>
+<script>
+document.querySelectorAll('.copy').forEach(function(btn){btn.addEventListener('click',async function(){var el=document.getElementById(btn.dataset.copy);if(!el)return;var old=btn.textContent;try{await navigator.clipboard.writeText(el.textContent);btn.textContent='Đã copy';setTimeout(function(){btn.textContent=old},1200)}catch(e){btn.textContent='Copy lỗi'}})});
+</script>
+</body>
+</html>
